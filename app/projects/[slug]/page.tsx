@@ -1,8 +1,8 @@
-"use client";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
+import ProjectNotFound from "@/components/project-not-found";
 
 const projectData: Record<string, any> = {
   haluka: {
@@ -43,7 +43,7 @@ const projectData: Record<string, any> = {
     githubUrl: "https://github.com/tajmirul/mti-electronics",
     year: "2024",
   },
-  epikcart: {
+  "english-corrector": {
     title: "Epikcart",
     subtitle: "Multi-language Shopping Platform",
     description:
@@ -75,7 +75,7 @@ const projectData: Record<string, any> = {
     githubUrl: "https://github.com/tajmirul/epikcart",
     year: "2023",
   },
-  "resume-roaster": {
+  "finance-tracker": {
     title: "Resume Roaster",
     subtitle: "AI-Powered Resume Analysis",
     description:
@@ -113,7 +113,7 @@ const projectData: Record<string, any> = {
     githubUrl: "https://github.com/tajmirul/resume-roaster",
     year: "2024",
   },
-  "real-estate": {
+  "portofolio-dev": {
     title: "Real Estate Platform",
     subtitle: "Property Management System",
     description:
@@ -151,7 +151,7 @@ const projectData: Record<string, any> = {
     githubUrl: "https://github.com/tajmirul/real-estate",
     year: "2023",
   },
-  "consulting-finance": {
+  "consulting-hris": {
     title: "Consulting Finance",
     subtitle: "Financial Consulting Website",
     description:
@@ -185,36 +185,16 @@ const projectData: Record<string, any> = {
   },
 };
 
-export default function ProjectDetail() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = params.slug as string;
+export default function ProjectDetail({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const slug = params.slug;
   const project = projectData[slug];
 
   if (!project) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Project Not Found</h1>
-          <Button
-            onClick={() => {
-              router.push("/#projects");
-              setTimeout(() => {
-                const projectsSection =
-                  document.getElementById("projects-section");
-                if (projectsSection) {
-                  projectsSection.scrollIntoView({ behavior: "smooth" });
-                }
-              }, 100);
-            }}
-            className="bg-green-400 hover:bg-green-500 text-black"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Projects
-          </Button>
-        </div>
-      </div>
-    );
+    return <ProjectNotFound />;
   }
 
   return (
@@ -223,24 +203,14 @@ export default function ProjectDetail() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-sm p-6">
         <div className="flex justify-between items-center">
           <Button
+            asChild
             variant="ghost"
-            onClick={() => {
-              {
-                router.push("/#projects");
-                // Alternative approach for smooth scrolling
-                setTimeout(() => {
-                  const projectsSection =
-                    document.getElementById("projects-section");
-                  if (projectsSection) {
-                    projectsSection.scrollIntoView({ behavior: "smooth" });
-                  }
-                }, 100);
-              }
-            }}
             className="text-white hover:text-green-400"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Portfolio
+            <a href="/#projects" className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Portfolio
+            </a>
           </Button>
           <div className="flex space-x-4">
             <Button
@@ -289,17 +259,26 @@ export default function ProjectDetail() {
           </div>
 
           <div className="flex space-x-4">
-            <Button className="bg-green-400 hover:bg-green-500 text-black">
-              <ExternalLink className="w-4 h-4 mr-2" />
-              View Live Site
-            </Button>
-            <Button
-              variant="outline"
-              className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
+            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+              <Button className="bg-green-400 hover:bg-green-500 text-black">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                View Live Site
+              </Button>
+            </a>
+
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Github className="w-4 h-4 mr-2" />
-              View Code
-            </Button>
+              <Button
+                variant="outline"
+                className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
+              >
+                <Github className="w-4 h-4 mr-2" />
+                View Code
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -379,4 +358,14 @@ export default function ProjectDetail() {
       </section>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  return [
+    { slug: "haluka" },
+    { slug: "english-corrector" },
+    { slug: "finance-tracker" },
+    { slug: "portofolio-dev" },
+    { slug: "consulting-hris" },
+  ];
 }
