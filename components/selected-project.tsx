@@ -23,34 +23,45 @@ const projects: Project[] = [
   },
   {
     id: "02",
-    name: "English Corrector",
-    stack: ["React", "Redux", "React i18n"],
+    name: "Personal Grammarly",
+    stack: ["React", "GPT-4", "Node.js"],
   },
   {
     id: "03",
-    name: "Portofolio Dev",
-    stack: ["GPT-4", "Next.js", "PostgreSQL"],
+    name: "Finance Tracker",
+    stack: ["Next.js", "OpenAI API", "Supabase"],
   },
   {
     id: "04",
-    name: "Finance Tracker",
-    stack: ["React.js", "Redux", "Tailwind CSS"],
+    name: "BeaconDEX",
+    stack: ["Solidity", "Next.js", "Wagmi", "RainbowKit"],
   },
   {
     id: "05",
     name: "Consulting HRIS",
-    stack: ["HTML", "CSS & SCSS", "Javascript"],
+    stack: ["Laravel", "Blade", "Tailwind CSS"],
+  },
+  {
+    id: "06",
+    name: "Portofolio DEV",
+    stack: ["Next.js", "TypeScript", "Framer Motion"],
   },
 ];
 
 function getProjectDescription(name: string): string {
   switch (name) {
-    case "MTI Electronics":
-      return "An industrial web app for monitoring manufacturing logistics.";
-    case "Epikcart":
-      return "E-commerce platform with seamless checkout experience.";
-    case "Resume Roaster":
-      return "AI-powered resume analyzer with GPT-4.";
+    case "Haluka":
+      return "A boarding school management system for booth coordination and structured call scheduling.";
+    case "Personal Grammarly":
+      return "An AI-powered sentence corrector that personalizes grammar and tone suggestions, with support for Bahasa Indonesia.";
+    case "Finance Tracker":
+      return "A personal finance dashboard with AI insights for smarter budgeting and spending tracking.";
+    case "BeaconDEX":
+      return "A decentralized exchange prototype built for a hackathon, featuring permit-based meta transactions.";
+    case "Consulting HRIS":
+      return "A lightweight human resources system tailored for small businesses and consulting workflows.";
+    case "Portofolio DEV":
+      return "A personal developer portfolio showcasing projects, blogs, and open-source contributions in a clean interface.";
     default:
       return "Detailed project description here.";
   }
