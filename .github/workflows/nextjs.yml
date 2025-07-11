@@ -21,6 +21,12 @@ jobs:
       NEXT_PUBLIC_DEV_TO_USERNAME: ${{ vars.NEXT_PUBLIC_DEV_TO_USERNAME }}
 
     steps:
+      - name: Debug Variables
+        run: |
+          echo "ENV: $NEXT_PUBLIC_DEV_TO_USERNAME"
+          echo "VAR: ${{ vars.NEXT_PUBLIC_DEV_TO_USERNAME }}"
+          printenv
+
       - name: Checkout
         uses: actions/checkout@v4
 
