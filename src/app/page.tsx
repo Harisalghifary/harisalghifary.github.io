@@ -6,31 +6,31 @@ import { Github, Linkedin, Mail, ExternalLink, Briefcase, Cpu, GraduationCap } f
 
 export default function Home() {
   return (
-    <main className="min-h-screen px-6 py-12 md:px-12 lg:px-24">
+    <main className="min-h-screen px-4 py-8 md:px-12 lg:px-24">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center pt-32 pb-16 text-center">
+      <section className="flex flex-col items-center justify-center pt-20 pb-12 md:pt-32 md:pb-16 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="px-4 py-1.5 text-xs font-semibold tracking-[0.2em] uppercase border rounded-full glass-panel border-white/10 text-primary mb-6 inline-block">
+          <span className="px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs font-semibold tracking-[0.2em] uppercase border rounded-full glass-panel border-white/10 text-primary mb-6 inline-block">
             {userData.personal_info.professional_title}
           </span>
-          <h1 className="mt-4 text-6xl font-extrabold tracking-tighter md:text-8xl lg:text-9xl text-gradient">
-            Orchestrating <br className="hidden md:block" /> Intelligence.
+          <h1 className="mt-4 text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-tighter text-gradient leading-[1.1]">
+            Orchestrating <br className="hidden sm:block" /> Intelligence.
           </h1>
-          <p className="max-w-3xl mx-auto mt-10 text-xl md:text-2xl text-white/50 leading-relaxed font-light">
+          <p className="max-w-xl md:max-w-3xl mx-auto mt-6 md:mt-10 text-lg md:text-2xl text-white/50 leading-relaxed font-light">
             Building autonomous <span className="text-white/90 font-medium">AI Agent workflows</span> and 
             decentralized systems at the intersection of scale and innovation. 
             <span className="text-primary font-bold"> Ex-ByteDance</span>.
           </p>
           
-          <div className="flex items-center justify-center gap-8 mt-16">
-            <a href={userData.personal_info.social_profiles.linkedin} target="_blank" className="px-8 py-4 bg-primary text-black font-bold rounded-full hover:scale-105 transition-transform flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8 mt-12 md:mt-16 w-full">
+            <a href={userData.personal_info.social_profiles.linkedin} target="_blank" className="w-full sm:w-auto px-8 py-4 bg-primary text-black font-bold rounded-full hover:scale-105 transition-transform flex items-center justify-center gap-2">
               <Linkedin size={20} /> Let's Connect
             </a>
-            <div className="flex gap-4">
+            <div className="flex gap-4 items-center">
               <a href={userData.personal_info.social_profiles.github} target="_blank" className="p-4 transition-colors rounded-full glass-card hover:text-primary">
                 <Github size={24} />
               </a>
@@ -48,7 +48,7 @@ export default function Home() {
           <p className="text-center text-[10px] uppercase tracking-[0.3em] text-white/20 mb-8">Trusted by Global Leaders</p>
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
             {userData.brands.map((brand) => (
-              <span key={brand} className="text-2xl md:text-3xl font-black tracking-tighter text-white hover:text-primary cursor-default transition-colors">
+              <span key={brand} className="text-xl md:text-3xl font-black tracking-tighter text-white hover:text-primary cursor-default transition-colors">
                 {brand.toUpperCase()}
               </span>
             ))}
@@ -132,7 +132,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="p-8 rounded-2xl glass-card flex flex-col md:flex-row gap-8"
+                className="p-6 md:p-8 rounded-2xl glass-card flex flex-col md:flex-row gap-6 md:gap-8"
               >
                 <div className="md:w-1/3">
                   <h3 className="text-xl font-bold">{exp.company}</h3>
