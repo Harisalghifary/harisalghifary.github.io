@@ -2,9 +2,17 @@
 
 import { motion } from "framer-motion";
 import { userData } from "@/lib/data";
-import { Github, Linkedin, Mail, ExternalLink, Briefcase, Cpu, GraduationCap } from "lucide-react";
+import { Github, Linkedin, Mail, ExternalLink, Briefcase, Cpu, GraduationCap, Rocket } from "lucide-react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import Modal from "@/components/Modal";
+import ProjectDetails from "@/components/ProjectDetails";
 
-export default function Home() {
+function HomeContent() {
+  const searchParams = useSearchParams();
+  const projectId = searchParams.get("p");
+
   return (
     <main className="min-h-screen px-4 py-8 md:px-12 lg:px-24">
       {/* Hero Section */}
@@ -168,41 +176,59 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {userData.projects.map((project, index) => (
-              <motion.div
-                key={project.name}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="p-6 rounded-2xl glass-card group cursor-pointer"
+              <Link
+                key={project.id}
+                href={`?p=${project.id}`}
+                scroll={false}
               >
-                <div className="flex justify-between items-start mb-4">
-                  <span className="text-xs font-medium text-primary px-2 py-0.5 rounded bg-primary/10">
-                    {project.category || "Project"}
-                  </span>
-                  <ExternalLink size={16} className="text-white/20 group-hover:text-primary transition-colors" />
-                </div>
-                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{project.name}</h3>
-                <p className="text-sm text-white/50 mb-4">{project.description}</p>
-                {"tech" in project && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="p-6 rounded-2xl glass-card group cursor-pointer h-full"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="text-xs font-medium text-primary px-2 py-0.5 rounded bg-primary/10 uppercase tracking-widest">
+                      {project.category || "Project"}
+                    </span>
+                    <ExternalLink size={16} className="text-white/20 group-hover:text-primary transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{project.name}</h3>
+                  <p className="text-sm text-white/50 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {(project.tech as string[]).map(t => (
+                    {project.tech_stack.map(t => (
                       <span key={t} className="text-[10px] uppercase tracking-wider text-white/30 px-2 py-0.5 border border-white/5 rounded">
                         {t}
                       </span>
                     ))}
                   </div>
-                )}
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Project Modal */}
+      {projectId && (
+        <Modal>
+          <ProjectDetails id={projectId} />
+        </Modal>
+      )}
 
       {/* Footer */}
       <footer className="py-12 border-t border-white/5 text-center text-white/20 text-sm">
         <p>© 2026 {userData.personal_info.full_name}. Built with Precision.</p>
       </footer>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#050505]" />}>
+      <HomeContent />
+    </Suspense>
   );
 }
