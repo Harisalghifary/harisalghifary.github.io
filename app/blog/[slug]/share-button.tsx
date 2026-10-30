@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { Check, ExternalLink, Share2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-import { Share2, ExternalLink } from "lucide-react";
 
 interface Props {
   title: string;
@@ -14,41 +16,39 @@ export default function ShareAndLinkButtons({
   description,
   url,
 }: Props) {
-  const handleShare = async () => {
+  const [copied, setCopied] = useState(false);
+
+  async function handleShare() {
     try {
       if (navigator.share) {
         await navigator.share({ title, text: description, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert("Link copied to clipboard!");
+        return;
       }
-    } catch (error) {
-      console.log("Error sharing:", error);
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // User dismissed the share sheet; nothing to do.
     }
-  };
+  }
 
   return (
-    <div className="flex items-center space-x-4">
-      <Button
-        variant="ghost"
-        onClick={handleShare}
-        className="text-white hover:text-green-400"
-      >
-        <Share2 className="w-4 h-4 mr-2" />
-        Share
+    <div className="flex items-center gap-2">
+      <Button variant="outline" size="sm" onClick={handleShare}>
+        {copied ? (
+          <Check aria-hidden="true" />
+        ) : (
+          <Share2 aria-hidden="true" />
+        )}
+        {copied ? "Copied" : "Share"}
       </Button>
 
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center text-white hover:text-green-400"
-      >
-        <Button variant="ghost" className="flex items-center gap-2">
-          <ExternalLink className="w-4 h-4" />
-          View on Dev.to
-        </Button>
-      </a>
+      <Button asChild variant="ghost" size="sm">
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          <ExternalLink aria-hidden="true" />
+          dev.to
+        </a>
+      </Button>
     </div>
   );
 }

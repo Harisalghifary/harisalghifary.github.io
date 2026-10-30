@@ -1,322 +1,219 @@
-"use client";
-import { ExternalLink, Github, Menu, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import SelectedProjects from "@/components/selected-project";
-import Footer from "@/components/footer";
-import TechStack from "@/components/tech-stack";
-import BurgerMenu from "@/components/burger-menu";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
-export default function Portfolio() {
+import ContactCta from "@/components/contact-cta";
+import Experience from "@/components/experience";
+import Footer from "@/components/footer";
+import HeroCard from "@/components/hero-card";
+import ProjectRow from "@/components/project-row";
+import SectionHeading from "@/components/section-heading";
+import SiteNav from "@/components/site-nav";
+import TechStack from "@/components/tech-stack";
+import { Button } from "@/components/ui/button";
+import {
+  featuredByGroup,
+  groupOrder,
+  projectGroups,
+  publishedProjects,
+} from "@/lib/projects";
+
+const proof = [
+  { value: "5+", label: "Years shipping" },
+  { value: "16×", label: "Faster pipelines" },
+  { value: "20+", label: "DeFi protocols" },
+];
+
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
-      {/* Background particles/dots effect */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        {Array.from({ length: 50 }).map((_, i) => (
+    <div className="min-h-screen">
+      <SiteNav />
+
+      <main id="main">
+        {/* Hero */}
+        <section className="relative overflow-hidden">
           <div
-            key={i}
-            className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 p-6">
-        <div className="flex justify-end px-6 lg:px-20">
-          <div className="flex space-x-6">
-            <Link href="/projects">
-              <Button
-                variant="ghost"
-                className="text-white hover:text-green-500"
-              >
-                Project
-              </Button>
-            </Link>
-            <Link href="/blog">
-              <Button
-                variant="ghost"
-                className="text-white hover:text-green-500"
-              >
-                Blog
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
-      {/* <BurgerMenu /> */}
-
-      {/* Hero Section */}
-      <section
-        id="home"
-        className="min-h-screen flex items-center px-6 lg:px-20 pt-10"
-      >
-        <div className="max-w-6xl mx-auto flex w-full items-start justify-between gap-10">
-          {/* Left Content */}
-          <div className="flex-1">
-            <h1 className="text-6xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-              <span className="text-green-500 block">FULLSTACK</span>
-              <span className="text-white block pl-4">DEVELOPER</span>
-            </h1>
-            <p className="text-gray-300 text-lg mb-8 max-w-lg">
-              Hi! I'm <span className="text-white font-semibold">Haris</span>, a
-              Fullstack Developer with 4+ years of experience building
-              high-performance, scalable, and responsive web solutions. I thrive
-              on solving complex problems and turning ideas into functional,
-              impactful products.
-            </p>
-            <Button
-              onClick={() => {
-                const footer = document.getElementById("footer");
-                if (footer) {
-                  footer.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-              className="bg-green-400 hover:bg-white text-black font-bold px-8 py-3 text-lg"
-            >
-              CONTACT ME
-            </Button>
+            className="pointer-events-none absolute inset-0 -z-10"
+            aria-hidden="true"
+          >
+            <div className="absolute inset-0 grid-pattern opacity-40" />
+            <div className="absolute -top-48 right-[-10%] h-[34rem] w-[34rem] rounded-full bg-brand/[0.07] blur-[130px]" />
+            <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-background to-transparent" />
           </div>
 
-          {/* Stats */}
-          <div className="hidden lg:flex flex-col space-y-12 text-right">
+          <div className="container grid items-center gap-14 pb-16 pt-32 lg:grid-cols-[1fr_22rem] lg:gap-20 lg:pb-24 lg:pt-44">
             <div>
-              <div className="text-4xl font-bold text-green-400">4+</div>
-              <div className="text-gray-400">Years of Experience</div>
+              <p className="flex items-center gap-2.5 text-caption-sm uppercase tracking-[0.18em] text-muted-foreground">
+                <span
+                  className="h-1.5 w-1.5 rounded-full bg-brand"
+                  aria-hidden="true"
+                />
+                Software Engineer · AI &amp; Onchain
+              </p>
+
+              <h1 className="mt-6 max-w-[18ch] text-[clamp(2.5rem,5.6vw,4.5rem)] font-medium leading-[1.04] tracking-[-0.02em] text-foreground">
+                I build systems that move data and{" "}
+                <span className="text-brand">money</span> without falling over.
+              </h1>
+
+              <p className="mt-6 max-w-xl text-[1.0625rem] leading-relaxed text-muted-foreground">
+                Five years across ByteDance logistics, DeFi infrastructure, and
+                applied AI. I work mostly in Go and TypeScript, and I care about
+                the part that has to hold up when traffic, data, or money gets
+                real.
+              </p>
+
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <Button asChild size="lg">
+                  <Link href="/#contact">
+                    Let&apos;s talk
+                    <ArrowUpRight aria-hidden="true" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline">
+                  <Link href="/#projects">See selected work</Link>
+                </Button>
+              </div>
+
+              <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-border pt-6">
+                {proof.map((item) => (
+                  <div key={item.label}>
+                    <dt className="sr-only">{item.label}</dt>
+                    <dd>
+                      <span className="block text-h4 font-medium tabular-nums text-foreground">
+                        {item.value}
+                      </span>
+                      <span className="mt-1 block text-caption-sm text-muted-foreground">
+                        {item.label}
+                      </span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-green-400">10+</div>
-              <div className="text-gray-400">Completed Projects</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-green-400">10K+</div>
-              <div className="text-gray-400">Hours Worked</div>
-            </div>
+
+            <HeroCard />
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Philosophy Section */}
-      <section id="about" className="flex items-center px-6 pt-10 lg:px-20">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl lg:text-6xl font-thin leading-tight mb-16">
-            I blend user-centered design with scalable backend systems to build
-            intuitive, high-performance web solutions.
-          </h2>
+        {/* About */}
+        <section id="about" className="scroll-mt-20 border-t border-border">
+          <div className="container py-24 lg:py-32">
+            <SectionHeading
+              index="01"
+              label="About"
+              title="AI needs plumbing. Onchain needs UX. I do both ends."
+            />
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-gray-400 mb-8">This is me.</p>
-              <h3 className="text-4xl lg:text-5xl font-bold mb-8">
-                Hi, I'm Haris.
-              </h3>
-            </div>
-            <div className="space-y-6 text-gray-300">
-              <p>
-                I'm a full-stack web developer who builds thoughtful,
-                high-performance web experiences. I focus on crafting scalable,
-                user-friendly solutions that align with both product goals and
-                user needs—balancing clean design, performance, and technical
-                precision to create real impact.
+            <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+              <p className="text-[1.0625rem] leading-relaxed text-muted-foreground">
+                I&apos;ve spent five years on systems that can&apos;t afford to
+                be slow. At ByteDance I rebuilt two reconciliation pipelines to
+                process a million records in under three hours, sixteen times
+                faster than the version that fell over at a hundred thousand. At
+                Belajarplus I ran a multi-tenant backend for a hundred schools
+                and led two engineers.
+              </p>
+
+              <p className="text-[1.0625rem] leading-relaxed text-muted-foreground">
+                Most recently I built the off-chain side of a DeFi protocol: API,
+                indexer, subgraph, Merkle server, oracle, and a TypeScript SDK
+                covering twenty-plus protocols. I like the unglamorous part.
+                Batch windows, idempotency, retries, and data models that
+                don&apos;t need rewriting six months later.
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <TechStack />
-
-      {/* Experience Section */}
-      <section
-        id="experience"
-        className="flex items-center px-6 lg:px-20 pt-10"
-      >
-        <div className="max-w-6xl mx-auto w-full">
-          <div className="flex items-center space-x-4 mb-8">
-            <div className="w-8 h-8 flex items-center justify-center">
-              <img
-                src="/clover-svgrepo-com.svg"
-                alt="icon"
-                className="w-6 h-6"
-              />
-            </div>
-            <h2 className="text-2xl font-bold">MY EXPERIENCE</h2>
+        {/* Stack */}
+        <section id="stack" className="scroll-mt-20 border-t border-border">
+          <div className="container py-24 lg:py-32">
+            <SectionHeading
+              index="02"
+              label="Stack"
+              title="The tools I reach for."
+              description="Chosen for the problem, not the trend. Most of my day is Go, TypeScript, and the database underneath."
+            />
+            <TechStack />
           </div>
+        </section>
 
-          <div className="space-y-8">
-            <ExperienceItem
-              company="Bytedance"
-              role="L4 Software Engineer"
-              period="Jun 2023 - Present"
-            />
-            <ExperienceItem
-              company="Belajarplus"
-              role="Software Engineer"
-              period="Aug 2021 - Jun 2023"
-            />
-            <ExperienceItem
-              company="Resolv.id"
-              role="Product Engineer"
-              period="Dec 2020 - Dec 2021"
-            />
-            <ExperienceItem
-              company="Bandung Institute of Technology"
-              role="System Administrator"
-              period="Dec 2019 - Oct 2021"
-            />
-          </div>
-        </div>
-      </section>
-
-      <SelectedProjects />
-      <Footer />
-      <section className="flex items-center py-1 mb-2">
-        <div className="flex items-center justify-center mx-auto w-fit text-gray-300">
-          <p> Created With Passion by Haris Salman</p>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function ExperienceItem({
-  company,
-  role,
-  period,
-}: {
-  company: string;
-  role: string;
-  period: string;
-}) {
-  return (
-    <div>
-      <p className="text-gray-400 text-xl mb-2">{company}</p>
-      <h3 className="text-3xl lg:text-3xl font-bold mb-2">{role}</h3>
-      <p className="text-gray-400 text-xl ">{period}</p>
-    </div>
-  );
-}
-
-function ProjectItem({
-  number,
-  name,
-  techs,
-  highlight = false,
-  projectId,
-}: {
-  number: string;
-  name: string;
-  techs: string[];
-  highlight?: boolean;
-  projectId: string;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push(`/projects/${projectId}`);
-  };
-
-  return (
-    <div
-      className="relative flex cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleClick}
-    >
-      <div className="transition-transform duration-300 group-hover:-translate-y-2">
-        <p className="text-gray-500 mb-2">{number}</p>
-        <h3
-          className={`text-3xl lg:text-4xl font-bold transition-colors duration-300 ${
-            highlight
-              ? "text-green-400"
-              : "text-gray-400 group-hover:text-white"
-          }`}
+        {/* Experience */}
+        <section
+          id="experience"
+          className="scroll-mt-20 border-t border-border"
         >
-          {name}
-        </h3>
-        <div className="flex flex-wrap gap-2">
-          {techs.map((tech, index) => (
-            <span
-              key={index}
-              className="text-gray-500 text-sm group-hover:text-gray-300 transition-colors duration-300"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Animated popup from below */}
-      <div
-        className={`absolute left-full ml-3 top-1/2 -translate-y-1/2 
-              w-[420px] p-8 
-              bg-gray-800 rounded-lg shadow-2xl border border-gray-700 
-              transition-all duration-300 transform ${
-                isHovered
-                  ? "opacity-100 translate-y-0 visible"
-                  : "opacity-0 translate-y-4 invisible"
-              }`}
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h4 className="text-xl font-bold text-white">{name}</h4>
-          <div className="flex space-x-2">
-            <button className="p-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
-              <Github className="w-4 h-4 text-white" />
-            </button>
-            <button className="p-2 bg-green-400 hover:bg-green-500 rounded-lg transition-colors">
-              <ExternalLink className="w-4 h-4 text-black" />
-            </button>
+          <div className="container py-24 lg:py-32">
+            <SectionHeading
+              index="03"
+              label="Experience"
+              title="Five years, four teams."
+            />
+            <Experience />
           </div>
-        </div>
-        <p className="text-gray-300 text-sm mb-4">
-          {getProjectDescription(name)}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {techs.map((tech, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 bg-gray-700 text-gray-300 text-xs rounded-full"
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-        <div className="mt-4 text-green-400 text-sm font-medium flex items-center">
-          Click to view details
-          <ExternalLink className="w-3 h-3 ml-1" />
-        </div>
-      </div>
+        </section>
+
+        {/* Work */}
+        <section id="projects" className="scroll-mt-20 border-t border-border">
+          <div className="container py-24 lg:py-32">
+            <SectionHeading
+              index="04"
+              label="Selected work"
+              title="Things I built and still stand behind."
+              description={`${publishedProjects.length} projects, all built end to end. AI, onchain, and the product work in between.`}
+            />
+
+            <div className="space-y-14">
+              {groupOrder.map((groupKey) => {
+                const items = featuredByGroup(groupKey);
+                if (items.length === 0) return null;
+                const group = projectGroups[groupKey];
+
+                return (
+                  <div
+                    key={groupKey}
+                    className="grid gap-5 lg:grid-cols-[13rem_1fr] lg:gap-10"
+                  >
+                    <div className="lg:sticky lg:top-24 lg:self-start">
+                      <p className="flex items-center gap-2 text-caption-sm uppercase tracking-[0.16em] text-muted-foreground">
+                        <span className="text-brand">{group.index}</span>
+                        <span className="h-px w-4 bg-border" aria-hidden="true" />
+                        {group.label}
+                      </p>
+                      <p className="mt-2 max-w-[16rem] text-caption text-muted-foreground">
+                        {group.description}
+                      </p>
+                    </div>
+
+                    <div>
+                      {items.map((project, index) => (
+                        <ProjectRow
+                          key={project.slug}
+                          project={project}
+                          index={`0${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-12">
+              <Button asChild variant="outline">
+                <Link href="/projects">
+                  View all {publishedProjects.length} projects
+                  <ArrowUpRight aria-hidden="true" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <ContactCta />
+      </main>
+
+      <Footer />
     </div>
-  );
-}
-
-function getProjectDescription(name: string): string {
-  const descriptions: Record<string, string> = {
-    Haluka:
-      "A boarding school management system for booth coordination and structured call scheduling.",
-    "Personal Grammarly":
-      "An AI-powered sentence corrector that personalizes grammar and tone suggestions, with support for Bahasa Indonesia.",
-    "Finance Tracker":
-      "A personal finance dashboard with AI insights for smarter budgeting and spending tracking.",
-    BeaconDEX:
-      "A decentralized exchange prototype built for a hackathon, featuring permit-based meta transactions.",
-    "Consulting HRIS":
-      "A lightweight human resources system tailored for small businesses and consulting workflows.",
-    "Portofolio DEV":
-      "A personal developer portfolio showcasing projects, blogs, and open-source contributions in a clean interface.",
-  };
-
-  return (
-    descriptions[name] ||
-    "Innovative web application built with modern technologies and best practices."
   );
 }
