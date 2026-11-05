@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 const rows = [
   { label: "Focus", value: "AI products · Onchain systems" },
   { label: "Stack", value: "TypeScript · Go · Solidity" },
-  { label: "Base", value: "Remote · UTC+7" },
+  { label: "Base", value: "Remote · EU / MENA / US overlap" },
 ];
 
 export default function HeroCard() {
@@ -26,7 +26,7 @@ export default function HeroCard() {
             Available for work
           </span>
           <span className="text-caption-sm text-muted-foreground">
-            UTC+7
+            Remote
           </span>
         </div>
 

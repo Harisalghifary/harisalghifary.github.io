@@ -24,8 +24,8 @@ export default function ContactCta() {
 
             <p className="mt-5 max-w-xl text-body text-muted-foreground">
               I&apos;m open to senior software roles and a small number of
-              freelance projects. Remote, UTC+7, and I usually reply within a
-              day.
+              freelance projects. Remote, happy to overlap with EU, MENA, or US
+              hours, and I usually reply within a day.
             </p>
 
             <p className="mt-6 inline-flex items-center gap-2 text-caption text-muted-foreground">
