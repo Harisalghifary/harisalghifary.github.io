@@ -84,7 +84,9 @@ export const projects: Project[] = [
       "A tax-education platform with a RAG pipeline over Ministry of Finance documents. Ask a regulatory question in plain language and get an answer with the source attached, instead of a forum thread from 2014.",
     group: "ai",
     status: "shipped",
-    featured: true,
+    // Hidden for now: no public repo or write-up yet. Keep the data for later.
+    featured: false,
+    draft: true,
     year: "2025",
     category: "GovTech",
     role: "Solo build",
@@ -125,10 +127,6 @@ export const projects: Project[] = [
       "Used by 1,000+ people in beta",
       "4.9/5 on clarity improvement",
     ],
-    links: {
-      live: "https://personalgrammarly.vercel.app",
-      repo: "https://github.com/harisalghifary/personal-grammarly",
-    },
   },
   {
     slug: "finance-tracker",
@@ -153,23 +151,39 @@ export const projects: Project[] = [
       "Personalizing suggestions without compromising privacy",
       "Making budgeting work when the data is incomplete",
     ],
-    links: {
-      repo: "https://github.com/harisalghifary/finance-tracker",
-    },
   },
   {
     slug: "chainmind",
     title: "ChainMind",
-    tagline: "AI agents that can read and act onchain.",
-    // TODO: replace with the real write-up before setting draft: false.
-    summary: "A write-up is in progress for this project.",
-    group: "onchain",
-    status: "in-progress",
-    featured: false,
-    draft: true,
+    tagline: "An AI auditor that reads Solidity like a security reviewer.",
+    summary:
+      "ChainMind parses a Solidity contract, splits it into function-level chunks, and retrieves similar real-world exploit patterns with pgvector. An LLM reviews each chunk and returns a severity-ranked report with the vulnerable code, a suggested fix, and the pattern it matched.",
+    group: "ai",
+    status: "shipped",
+    featured: true,
     year: "2026",
-    category: "Onchain",
-    stack: [],
+    category: "Security",
+    role: "Solo build",
+    cover: "/projects/chainmind.png",
+    stack: ["Go", "pgvector", "Next.js", "Claude", "OpenAI"],
+    features: [
+      "Solidity parsing and function-level chunking",
+      "pgvector search over 21 curated exploit patterns",
+      "Claude and OpenAI providers with retry and automatic fallback",
+      "Async audit jobs with live chunk-level progress",
+      "Severity-ranked findings with fixes and references",
+    ],
+    challenges: [
+      "Keeping retrieved exploit patterns relevant without flooding the prompt",
+      "Making provider fallback invisible to the user when one API fails",
+    ],
+    results: [
+      "End-to-end pipeline from contract to structured report",
+      "Keyless mock mode so the demo runs without API keys",
+    ],
+    links: {
+      repo: "https://github.com/Harisalghifary/chainmind",
+    },
   },
   {
     slug: "beacondex",
@@ -196,10 +210,6 @@ export const projects: Project[] = [
       "Gas optimization under a 48-hour deadline",
     ],
     results: ["Top 5 finalist", "300+ testnet transactions"],
-    links: {
-      live: "https://beacondex.vercel.app",
-      repo: "https://github.com/harisalghifary/beacondex",
-    },
   },
   {
     slug: "satu-sehat",
@@ -224,6 +234,9 @@ export const projects: Project[] = [
       "Isolating data between tenants",
       "Mapping real clinic workflows onto a national API",
     ],
+    links: {
+      repo: "https://github.com/Harisalghifary/sehat-bridge",
+    },
   },
   {
     slug: "haluka",
@@ -249,10 +262,6 @@ export const projects: Project[] = [
       "Managing users across multiple booths",
     ],
     results: ["50% fewer communication issues", "Adopted by 3+ boarding schools"],
-    links: {
-      live: "https://haluka.vercel.app",
-      repo: "https://github.com/harisalghifary/haluka",
-    },
   },
   {
     slug: "bandar-swing-tracker",
